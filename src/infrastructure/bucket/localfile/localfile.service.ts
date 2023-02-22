@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import { ReadStream, createReadStream, writeFileSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { FileService } from '../../../domain/file.interface';
-import { GetCertificateRequest } from '../../../domain/certificate/certificate';
+import { GetCertificateRequest } from '../../../domain/certificate';
 
 export class LocalFileService implements FileService {
 

@@ -1,5 +1,5 @@
 import { ReadStream } from "fs";
-import { GetCertificateRequest } from "./certificate/certificate";
+import { GetCertificateRequest } from "./certificate";
 
 export interface FileService {
     getCertificate(certificate: GetCertificateRequest): ReadStream;

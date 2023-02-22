@@ -1,7 +1,7 @@
 import { Controller, Get, Post, UseInterceptors, UploadedFile, Body, Param, Header, StreamableFile, Logger, UseGuards, NotFoundException } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { RolesGuard } from "../../../infrastructure/guards/roles.guard";
-import { GetCertificateRequest, MakeCertificateRequest } from "../../../domain/certificate/certificate";
+import { GetCertificateRequest, MakeCertificateRequest } from "../../../domain/certificate";
 import { CertificateService } from "../../../application/certificate/certificate.service";
 
 @Controller("certificate")
@@ -40,10 +40,4 @@ export class CertificateController {
     return this.certificateService.uploadCertificate(file, params);
   }
 
-  @UseGuards(RolesGuard)
-  @Post("config/:type")
-  @UseInterceptors(FileInterceptor("config"))
-  configCertificate(@UploadedFile() file: Express.Multer.File, @Param('type') type) {
-    return this.certificateService.uploadConfig(file, type);
-  }
 }

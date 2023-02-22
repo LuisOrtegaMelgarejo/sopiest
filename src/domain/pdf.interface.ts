@@ -1,5 +1,5 @@
-import { Certificate } from "./certificate/certificate";
+import { CertificateFile } from "./certificate";
  
 export interface PdfService {
-    generateCertificate(certificate: Certificate): Promise<string>;
+    generateCertificate(certificate: CertificateFile): Promise<string>;
 }
