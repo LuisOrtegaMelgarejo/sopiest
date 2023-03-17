@@ -1,4 +1,6 @@
 export interface CertificateFile {
+    logoCode: string;
+    rectorCode: string;
     studentName: string;
     courseName: string;
     teacherName: string;

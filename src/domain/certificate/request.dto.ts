@@ -1,8 +1,11 @@
 export interface MakeCertificateRequest {
+    logoCode: string;
+    rectorCode: string;
     studentName: string;
     courseName: string;
     teacherCode: string;
     hours: number;
+    customId?: number;
 }
 
 export interface GetCertificateRequest {

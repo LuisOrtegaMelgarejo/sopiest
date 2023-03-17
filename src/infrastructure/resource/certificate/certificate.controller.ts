@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors, UploadedFile, Body, Param, Header, StreamableFile, Logger, UseGuards, NotFoundException } from "@nestjs/common";
+import { Controller, Get, Post, UseInterceptors, UploadedFile, Body, Param, Header, StreamableFile, Logger, UseGuards, NotFoundException, Delete } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { RolesGuard } from "../../../infrastructure/guards/roles.guard";
 import { GetCertificateRequest, MakeCertificateRequest } from "../../../domain/certificate";
@@ -31,6 +31,12 @@ export class CertificateController {
   @UseInterceptors(FileInterceptor("certificate"))
   makeCertificate(@Body() params: MakeCertificateRequest) {
     return this.certificateService.makeCertificate(params);
+  }
+
+  @Delete("/:id")
+  @UseInterceptors(FileInterceptor("certificate"))
+  deleteCertificate(@Param('id') id: number) {
+    return this.certificateService.deleteCertificate(id);
   }
 
   @UseGuards(RolesGuard)

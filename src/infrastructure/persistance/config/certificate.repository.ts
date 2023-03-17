@@ -21,6 +21,15 @@ export class MySqlConfigRepository implements ConfigRepository {
         .getOne();
     }
 
+    public async getConfigByType(configType: string): Promise<Config[]> {
+        return this.entityManager
+        .getRepository(Config)
+        .createQueryBuilder()
+        .select()
+        .where('configType = :configType', { configType })
+        .getMany();
+    }
+
     public async saveConfig(config: Partial<Config>): Promise<Config> {
         return this.entityManager.getRepository(Config).save(config);
     }

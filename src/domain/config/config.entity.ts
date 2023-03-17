@@ -4,7 +4,10 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 export class Config {
     @PrimaryColumn()
     configCode: string;
-    
+
+    @Column()
+    configType: number;    
+
     @Column()
     configName: string;
 }

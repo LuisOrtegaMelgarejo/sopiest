@@ -1,4 +1,4 @@
-import { Controller, Post, UseInterceptors, UploadedFile, Body, Logger, UseGuards } from "@nestjs/common";
+import { Controller, Post, UseInterceptors, UploadedFile, Body, Logger, UseGuards, Get, Param } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { RolesGuard } from "../../guards/roles.guard";
 import { CreateConfigRequest } from "../../../domain/config";
@@ -10,6 +10,11 @@ export class ConfigController {
   protected logger = new Logger(ConfigController.name);
 
   constructor(private readonly certificateService: CertificateService) {}
+
+  @Get("/:type")
+  getConfigs(@Param('type') type) {
+    return this.certificateService.getConfigs(type);
+  }
 
   @UseGuards(RolesGuard)
   @Post("/")

@@ -41,15 +41,23 @@ export class CertificateService {
             year: date.getFullYear()
         }
         const maxIdEmitted = await this.certificateRepository.getMaxId();
-        const maxId = maxIdEmitted ? maxIdEmitted : 7885;
+        const currentId = params.customId ? params.customId: ((maxIdEmitted ? maxIdEmitted : 7885) + 1);
         const teacherInfo = await this.configRepository.getConfig(params.teacherCode);
         const url = await this.pdfService.generateCertificate({
-            ...params, 
+            ...params,
             ...dateInfo,
             teacherName: teacherInfo.configName, 
-            serial: (maxId+1).toString().padStart(5, '0')
+            serial: (currentId).toString().padStart(5, '0')
         });
-        return this.certificateRepository.saveCertificate({ id: (maxId+1), ...params, ...dateInfo, url})
+        return this.certificateRepository.saveCertificate({ id: currentId, ...params, ...dateInfo, url})
+    }
+
+    public async deleteCertificate(id: number) {
+        return this.certificateRepository.deleteCertificate(id);
+    }
+
+    public async getConfigs(type: string) {
+        return this.configRepository.getConfigByType(type);
     }
 
     public async uploadCertificate(file: Express.Multer.File, certificate: GetCertificateRequest) {
