@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectEntityManager } from "@nestjs/typeorm";
-import { DeleteResult, EntityManager } from 'typeorm';
+import { DeleteResult, EntityManager, UpdateResult } from 'typeorm';
 import { CertificateRepository } from "../../../domain/certificate.repository";
 import { Certificate } from "../../../domain/certificate";
 
@@ -14,6 +14,14 @@ export class MySqlCertificateRepository implements CertificateRepository{
 
     public async saveCertificate(certificate: Partial<Certificate>): Promise<Certificate> {
         return this.entityManager.getRepository(Certificate).save(certificate);
+    }
+
+    public async updateCertificate(id: number, certificate: Partial<Certificate>): Promise<UpdateResult>{
+        return this.entityManager.createQueryBuilder()
+                .update(Certificate)
+                .set(certificate)
+                .where("id = :id", { id })
+                .execute();
     }
 
     public async deleteCertificate(id: number): Promise<DeleteResult> {

@@ -49,7 +49,19 @@ export class CertificateService {
             teacherName: teacherInfo.configName, 
             serial: (currentId).toString().padStart(5, '0')
         });
-        return this.certificateRepository.saveCertificate({ id: currentId, ...params, ...dateInfo, url})
+
+        if (!params.customId) {
+            return this.certificateRepository.saveCertificate({ id: currentId, ...params, ...dateInfo, url })
+        } else {
+
+            /* ToDo: ver porque no funciona con save, antes lo hacia*/
+            delete params.logoCode;
+            delete params.customId;
+            delete params.rectorCode;
+            delete params["password"];
+            
+            return this.certificateRepository.updateCertificate( currentId, { ...params, ...dateInfo, url })
+        }
     }
 
     public async deleteCertificate(id: number) {
