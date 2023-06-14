@@ -34,7 +34,7 @@ export class CertificateService {
     }
 
     public async makeCertificate(params: MakeCertificateRequest) {
-        const date = new Date();
+        const date = new Date(params.date);
         const dateInfo = {
             day: date.getDate(),
             month: date.getMonth(),
@@ -49,19 +49,14 @@ export class CertificateService {
             teacherName: teacherInfo.configName, 
             serial: (currentId).toString().padStart(5, '0')
         });
-
-        if (!params.customId) {
-            return this.certificateRepository.saveCertificate({ id: currentId, ...params, ...dateInfo, url })
+        let certificate;
+        if (params.customId) {
+            const oldCertificate = await this.certificateRepository.getCertificate(params.customId);
+            certificate = { ...oldCertificate, ...params, ...dateInfo, url}
         } else {
-
-            /* ToDo: ver porque no funciona con save, antes lo hacia*/
-            delete params.logoCode;
-            delete params.customId;
-            delete params.rectorCode;
-            delete params["password"];
-            
-            return this.certificateRepository.updateCertificate( currentId, { ...params, ...dateInfo, url })
+            certificate = { id: currentId, ...params, ...dateInfo, url };
         }
+        return this.certificateRepository.saveCertificate(certificate);
     }
 
     public async deleteCertificate(id: number) {

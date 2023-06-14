@@ -12,6 +12,9 @@ export class MySqlCertificateRepository implements CertificateRepository{
 
     constructor(@InjectEntityManager() private readonly entityManager: EntityManager) { }
 
+    public async getCertificate(id: number): Promise<Certificate> {
+        return this.entityManager.getRepository(Certificate).findOneBy({ id });
+    }
     public async saveCertificate(certificate: Partial<Certificate>): Promise<Certificate> {
         return this.entityManager.getRepository(Certificate).save(certificate);
     }

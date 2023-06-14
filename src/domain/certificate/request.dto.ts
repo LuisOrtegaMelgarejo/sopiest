@@ -1,6 +1,7 @@
 export interface MakeCertificateRequest {
     logoCode: string;
     rectorCode: string;
+    date: string;
     studentName: string;
     courseName: string;
     teacherCode: string;
