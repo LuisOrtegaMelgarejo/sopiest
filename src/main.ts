@@ -2,6 +2,8 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
+import * as path from 'path';
+import { readFileSync } from 'fs';
 import { AppModule } from './app.module';
 import { buildBanner } from './configs/app.config';
 import { buildDocument } from './configs/swagger.config';
@@ -9,9 +11,13 @@ import { buildDocument } from './configs/swagger.config';
 async function bootstrap() {
   // Initial const(s)
   const logger = new Logger(bootstrap.name);
-
+  console.log(__dirname)
   // AppModule Configuration
   const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: readFileSync(path.join(__dirname, 'secrets', 'private-key.pem')),
+      cert: readFileSync(path.join(__dirname, 'secrets', 'certificate.pem')),
+    },
     logger: ['error', 'warn', 'log']
   });
 
