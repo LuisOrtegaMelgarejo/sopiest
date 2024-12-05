@@ -14,10 +14,6 @@ async function bootstrap() {
   console.log(__dirname)
   // AppModule Configuration
   const app = await NestFactory.create(AppModule, {
-    httpsOptions: {
-      key: readFileSync(path.join(__dirname, 'secrets', 'private-key.pem')),
-      cert: readFileSync(path.join(__dirname, 'secrets', 'certificate.pem')),
-    },
     logger: ['error', 'warn', 'log']
   });
 
