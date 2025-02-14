@@ -78,4 +78,17 @@ export class CertificateService {
         }
     }
 
+    public async regenerateCertificates(): Promise<string[]> {
+        const certificates = await this.certificateRepository.getAllCertificates();
+        return Promise.all(certificates.map(async c => {
+            const teacherInfo = await this.configRepository.getConfig(c.teacherCode);
+            return this.pdfService.generateCertificate({
+                ...c,
+                rectorCode: 'rector',
+                teacherName: teacherInfo.configName, 
+                serial: (c.id).toString().padStart(5, '0')
+            });
+        }))
+    }
+
 }

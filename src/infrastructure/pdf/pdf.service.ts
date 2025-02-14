@@ -65,7 +65,7 @@ export class NestPdfService implements PdfService{
                                 widths: [ 170, 150, 180, 'auto' ],
                                 body: [
                                     [
-                                        { image: `./uploads/config/${certificate.rectorCode}.png`, alignment: 'left', height: 75, width: 100, margin: [30, 0, 0, 0] },
+                                        {/* image: `./uploads/config/${certificate.rectorCode}.png`, alignment: 'left', height: 75, width: 100, margin: [30, 0, 0, 0] */},
                                         { image: `./uploads/config/${certificate.teacherCode}.png`, alignment: 'center', height: 75, width: 100 },
                                         {},
                                         { qr: url, fit: '70', foreground: '#2d3035', background: 'white', margin: [0, 15, 0, 0]},

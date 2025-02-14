@@ -16,6 +16,9 @@ export class Certificate {
     teacherCode: string;
 
     @Column()
+    logoCode: string;
+
+    @Column()
     hours: number;
 
     @Column()

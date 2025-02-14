@@ -33,6 +33,12 @@ export class CertificateController {
     return this.certificateService.makeCertificate(params);
   }
 
+  @Post("regenerate")
+  @UseInterceptors(FileInterceptor("certificate"))
+  regenerateCertificate() {
+    return this.certificateService.regenerateCertificates();
+  }
+
   @Delete("/:id")
   @UseInterceptors(FileInterceptor("certificate"))
   deleteCertificate(@Param('id') id: number) {

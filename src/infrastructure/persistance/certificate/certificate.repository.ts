@@ -40,6 +40,14 @@ export class MySqlCertificateRepository implements CertificateRepository{
         .getMany();
     }
 
+    public async getAllCertificates(): Promise<Certificate[]> {
+        return this.entityManager
+        .getRepository(Certificate)
+        .createQueryBuilder()
+        .select()
+        .getMany();
+    }
+
     public async getMaxId(): Promise<number> {
         const maxId = await this.entityManager
         .getRepository(Certificate)
